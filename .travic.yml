@@ -1,0 +1,29 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t 315426316/client:latest -f ./client/Dockerfile ./client 
+
+script:
+  - docker run 315426316/client npm run test
+
+
+after_success:
+  # build add images
+  - docker build -t 315426316/nginx:latest -f ./nginx/Dockerfile ./nginx 
+  - docker build -t 315426316/client:latest -f ./client/Dockerfile ./client 
+  - docker build -t 315426316/api:latest -f ./api/Dockerfile ./api 
+  - docker build -t 315426316/worker:latest -f ./worker/Dockerfile ./worker 
+  - docker build -t 315426316/postgres:latest -f ./postgres/Dockerfile ./postgres 
+  - docker build -t 315426316/redis:latest -f ./redis/Dockerfile ./redis 
+  # login to docker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push 315426316/nginx 
+  - docker push 315426316/client 
+  - docker push 315426316/api 
+  - docker push 315426316/worker 
+  - docker push 315426316/postgres 
+  - docker push 315426316/redis    
+  # push to docker hub
