@@ -28,7 +28,6 @@ after_success:
   - docker push 315426316/redis    
   # push to docker hub
 
-
 deploy:
   provider: elasticbeanstalk
   region: us-east-1
