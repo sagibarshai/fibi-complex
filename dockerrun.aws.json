@@ -5,24 +5,29 @@
             "name":"client",
             "image":"315426346/client",
             "hostname":"client",
-            "essential":false
+            "essential":false,
+            "memory":128
         },
         {
             "name":"api",
             "image":"315426346/api",
             "hostname":"api",
-            "essential":false
+            "essential":false,
+            "memory":128
+
         },
         {
             "name":"worker",
             "image":"315426346/worker",
-            "essential":false
+            "essential":false,
+            "memory":128
         },
         {
             "name":"nginx",
             "image":"315426346/nginx",
             "links":["client","api"],
             "essential":true,
+            "memory":128,
             "portMappings":[
               {
                 "hostPort":80,
